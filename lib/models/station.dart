@@ -1,8 +1,10 @@
 class Station {
-  Station({required this.id, required this.name, required this.lines});
+  Station({required this.id, required this.name, required this.lines, this.longitude, this.latitude});
   final String id;
   final String name;
   final List<int> lines;
+  final double? latitude;
+  final double? longitude;
 
   bool get isTransfer => lines.length > 1;
 

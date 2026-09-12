@@ -1,9 +1,11 @@
 import 'package:cairo_metro_app/models/station.dart';
+import 'package:cairo_metro_app/services/coordinate_service.dart';
+import 'package:get/get.dart';
 
 class MetroNetwork {
   final List<String> line1Names = [
-    "Helwan", "Ain Helwan", "Cairo University (L1)", 
-    "Helwan", "Ain Helwan", "El-Maasara", "Tora El-Asmant", "Kozzika", 
+    "Helwan", "Ain Helwan", "Helwan University", 
+    "Wadi Hof", "Hadayek Helwan", "El-Maasara", "Tora El-Asmant", "Kozzika", 
     "Tora El-Balad", "Sakanat El-Maadi", "Maadi", "Hadayek El-Maadi", 
     "Dar El-Salam", "El-Zahraa", "Mar Girgis", "El-Malek El-Saleh", 
     "Al-Sayeda Zeinab", "Saad Zaghloul", "Sadat", "Gamal AbdElNasser", 
@@ -41,26 +43,32 @@ class MetroNetwork {
 
   final Map<String, Station> _registry = {};
 
-  Station _stationMaker(String stationName, int lineNumber)
-  {
-    String nameToID = stationName.replaceAll(" ", "").toLowerCase();
-    if(_registry.containsKey(nameToID))
-    {
-      Station existingStation = _registry[nameToID]!;
-      if(!existingStation.lines.contains(lineNumber))
-      {
-        existingStation.lines.add(lineNumber);
-      }
-      return existingStation;
+  Station _stationMaker(String stationName, int lineNumber) {
+  String nameToID = stationName.replaceAll(" ", "").replaceAll("-", "").toLowerCase();
+
+  if (_registry.containsKey(nameToID)) {
+    Station existingStation = _registry[nameToID]!;
+    if (!existingStation.lines.contains(lineNumber)) {
+      existingStation.lines.add(lineNumber);
     }
-    else
-    {
-      Station newStation = Station(id: nameToID, name: stationName, lines: [lineNumber]);
-      _registry[nameToID] = newStation;
-      graph[newStation] = [];
-      return newStation;
-    }
+    return existingStation;
+  } else {
+    final coordinateService = Get.find<CoordinateService>();
+    final coords = coordinateService.coordinatesGrabber(nameToID);
+
+    Station newStation = Station(
+      id: nameToID, 
+      name: stationName, 
+      lines: [lineNumber],
+      latitude: coords?.lat,
+      longitude: coords?.lng,
+    );
+
+    _registry[nameToID] = newStation;
+    graph[newStation] = [];
+    return newStation;
   }
+}
 
   void _buildLine(List<String> names, int lineNumber)
   {
