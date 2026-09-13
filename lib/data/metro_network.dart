@@ -105,7 +105,7 @@ class MetroNetwork {
     _buildLine(line3South, 3);
     Station kitkat = _registry["kitkat"]!;
     Station sudan = _registry["sudan"]!;
-    Station tawfikiya = _registry["el-tawfikiya"]!;
+    Station tawfikiya = _registry["eltawfikiya"]!;
     graph[kitkat]!.add(sudan);
     graph[sudan]!.add(kitkat);
     graph[kitkat]!.add(tawfikiya);

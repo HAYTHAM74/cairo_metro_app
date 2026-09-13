@@ -19,19 +19,6 @@ class RouteController extends GetxController
     network = MetroNetwork();
     network.buildNetwork();
     routingService = RoutingService(network);
-    // This is a test block
-    /*try {
-      // Grab two stations directly from your network graph for testing
-      Station? testStart = network.graph.keys.firstWhere((s) => s.name == "Adly Mansour");
-      Station? testEnd = network.graph.keys.firstWhere((s) => s.name == "Maadi");
-      
-      originStation.value = testStart;
-      destinationStation.value = testEnd;
-      
-      calculateRoutes();
-    } catch (e) {
-      print("Test stations not found in the network.");
-    }*/
   }
 
   void calculateRoutes()
@@ -50,11 +37,5 @@ class RouteController extends GetxController
     final routes = routingService.generateTripOptions(start: originStation.value!, destination: destinationStation.value!);
     tripOptions.assignAll(routes);
     isLoading.value = false;
-    print("\n========== ROUTE RESULTS ==========");
-    tripOptions.forEach((key, path) {
-      print("Option: [ $key ] - ${path.length} stations");
-      print(path.map((s) => s.name).join(" -> "));
-      print("-----------------------------------");
-    });
   }
 }
