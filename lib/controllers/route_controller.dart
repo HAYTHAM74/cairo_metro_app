@@ -37,5 +37,6 @@ class RouteController extends GetxController
     final routes = routingService.generateTripOptions(start: originStation.value!, destination: destinationStation.value!);
     tripOptions.assignAll(routes);
     isLoading.value = false;
+    
   }
 }

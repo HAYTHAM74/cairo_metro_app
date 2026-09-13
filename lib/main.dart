@@ -1,3 +1,4 @@
+import 'package:cairo_metro_app/controllers/route_controller.dart';
 import 'package:cairo_metro_app/services/coordinate_service.dart';
 import 'package:cairo_metro_app/widgets/test_widget.dart';
 import 'package:flutter/material.dart';
@@ -6,10 +7,9 @@ import 'package:get/get.dart';
 void main()
 {
   WidgetsFlutterBinding.ensureInitialized();
-
-  // Injects the dictionary into memory globally
   Get.put(CoordinateService());
-  runApp(MaterialApp(home: TestWidget(),));
+  Get.put(RouteController());
+  runApp(GetMaterialApp(debugShowCheckedModeBanner: false, home: TestWidget(),));
 }
 
 /*String _timeCalc(int numOfStations) {

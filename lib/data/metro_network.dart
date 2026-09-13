@@ -113,7 +113,7 @@ class MetroNetwork {
   }
   Station? findStationByName(String input)
   {
-    String key = input.replaceAll(" ", "").toLowerCase();
+    String key = input.replaceAll(" ", "").replaceAll("-", "").toLowerCase();
     return _registry[key];
   }
 }
