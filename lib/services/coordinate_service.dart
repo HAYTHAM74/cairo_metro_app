@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 class CoordinateService extends GetxService {
-  final Map<String, ({double lat, double lng})> _stationsCoordinates = {
+  final Map<String, ({double lat, double lng})> stationsCoordinates = {
     // Line 1
     'helwan': (lat: 29.8489, lng: 31.3342),
     'ainhelwan': (lat: 29.8628, lng: 31.3250),
@@ -22,7 +22,7 @@ class CoordinateService extends GetxService {
     'alsayedazeinab': (lat: 30.0292, lng: 31.2353),
     'saadzaghloul': (lat: 30.0367, lng: 31.2381),
     'sadat': (lat: 30.0444, lng: 31.2356),
-    'nasser': (lat: 30.0536, lng: 31.2389),
+    'gamalabdelnasser': (lat: 30.0536, lng: 31.2389),
     'orabi': (lat: 30.0575, lng: 31.2425),
     'alshohadaa': (lat: 30.0619, lng: 31.2461),
     'ghamra': (lat: 30.0689, lng: 31.2647),
@@ -31,8 +31,8 @@ class CoordinateService extends GetxService {
     'kobrielqobba': (lat: 30.0869, lng: 31.2939),
     'hammamatelqobba': (lat: 30.0903, lng: 31.2981),
     'sarayelqobba': (lat: 30.0981, lng: 31.3047),
-    'hadayeqelzaitoun': (lat: 30.1053, lng: 31.3100),
-    'helmeyetelzaitoun': (lat: 30.1144, lng: 31.3139),
+    'hadayekelzaitoun': (lat: 30.1053, lng: 31.3100),
+    'helmiyetelzaitoun': (lat: 30.1144, lng: 31.3139),
     'elmatareyya': (lat: 30.1214, lng: 31.3139),
     'ainshams': (lat: 30.1311, lng: 31.3192),
     'ezbetelnakhl': (lat: 30.1392, lng: 31.3244),
@@ -41,9 +41,9 @@ class CoordinateService extends GetxService {
 
     // Line 2
     'elmounib': (lat: 29.9814, lng: 31.2119),
-    'sakiatmekky': (lat: 29.9956, lng: 31.2086),
-    'ommelmasryeen': (lat: 30.0053, lng: 31.2081),
-    'elgiza': (lat: 30.0106, lng: 31.2069),
+    'sakiatmekki': (lat: 29.9956, lng: 31.2086),
+    'ommelmisryeen': (lat: 30.0053, lng: 31.2081),
+    'giza': (lat: 30.0106, lng: 31.2069),
     'faisal': (lat: 30.0172, lng: 31.2039),
     'cairouniversity': (lat: 30.0261, lng: 31.2011),
     'elbohoth': (lat: 30.0358, lng: 31.2003),
@@ -51,7 +51,7 @@ class CoordinateService extends GetxService {
     'opera': (lat: 30.0419, lng: 31.2253),
     'mohamednaguib': (lat: 30.0453, lng: 31.2442),
     'attaba': (lat: 30.0525, lng: 31.2469),
-    'masarra': (lat: 30.0711, lng: 31.2450),
+    'massara': (lat: 30.0711, lng: 31.2450),
     'roadelfarag': (lat: 30.0806, lng: 31.2456),
     'stteresa': (lat: 30.0883, lng: 31.2456),
     'khalafawy': (lat: 30.0981, lng: 31.2453),
@@ -61,23 +61,23 @@ class CoordinateService extends GetxService {
 
     // Line 3
     'adlymansour': (lat: 30.1469, lng: 31.4214),
-    'elhaykestep': (lat: 30.1439, lng: 31.4047),
+    'haykestep': (lat: 30.1439, lng: 31.4047),
     'omaribnelkhattab': (lat: 30.1406, lng: 31.3942),
-    'qobaa': (lat: 30.1347, lng: 31.3839),
+    'qubaa': (lat: 30.1347, lng: 31.3839),
     'heshambarakat': (lat: 30.1311, lng: 31.3728),
     'elnozha': (lat: 30.1283, lng: 31.3600),
-    'nadielshams': (lat: 30.1222, lng: 31.3439),
-    'alfmaskan': (lat: 30.1181, lng: 31.3397),
-    'heliopolissquare': (lat: 30.1081, lng: 31.3381),
+    'elshamsclub': (lat: 30.1222, lng: 31.3439),
+    'alfmasken': (lat: 30.1181, lng: 31.3397),
+    'heliopolis': (lat: 30.1081, lng: 31.3381),
     'haroun': (lat: 30.1011, lng: 31.3328),
     'alahram': (lat: 30.0914, lng: 31.3264),
     'koleyetelbanat': (lat: 30.0836, lng: 31.3289),
     'stadium': (lat: 30.0731, lng: 31.3175),
     'fairzone': (lat: 30.0733, lng: 31.3011),
-    'abbassia': (lat: 30.0697, lng: 31.2808),
+    'abbassiya': (lat: 30.0697, lng: 31.2808),
     'abdoupasha': (lat: 30.0647, lng: 31.2747),
     'elgeish': (lat: 30.0619, lng: 31.2669),
-    'babelshaaria': (lat: 30.0539, lng: 31.2561),
+    'babelshaariya': (lat: 30.0539, lng: 31.2561),
     'maspero': (lat: 30.0556, lng: 31.2322),
     'safaahegazy': (lat: 30.0625, lng: 31.2225),
     'kitkat': (lat: 30.0667, lng: 31.2131),
@@ -86,13 +86,14 @@ class CoordinateService extends GetxService {
     'elbohy': (lat: 30.0822, lng: 31.2106),
     'elqawmia': (lat: 30.0933, lng: 31.2089),
     'ringroad': (lat: 30.0964, lng: 31.1997),
-    'rodalfaragcorridor': (lat: 30.1019, lng: 31.1842),
-    'tawfikia': (lat: 30.0653, lng: 31.2025),
+    'rodelfaragcorridor': (lat: 30.1019, lng: 31.1842),
+    'eltawfikiya': (lat: 30.0653, lng: 31.2025),
     'wadielnile': (lat: 30.0583, lng: 31.2011),
-    'gamateldowal': (lat: 30.0508, lng: 31.1997),
-    'boulakeldakrour': (lat: 30.0361, lng: 31.1964),
+    'gamaateldowal': (lat: 30.0508, lng: 31.1997),
+    'bulaqeldakrour': (lat: 30.0361, lng: 31.1964),
   };
+
   ({double lat, double lng})? coordinatesGrabber(String stationId) {
-    return _stationsCoordinates[stationId];
+    return stationsCoordinates[stationId];
   }
 }
