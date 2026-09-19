@@ -6,7 +6,7 @@ class RouteTile extends StatelessWidget {
     super.key,
     required this.station,
     required this.currentLine,
-    this.transferTo
+    this.transferTo,
   });
 
   final Station station;
@@ -21,19 +21,19 @@ class RouteTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color lineColor =  linesToColor[currentLine] ?? Colors.grey;
+    final Color lineColor = linesToColor[currentLine] ?? Colors.grey;
+
+    // Evaluate if a transfer is ACTUALLY happening on this trip
+    final bool isRealTransfer = transferTo != null && transferTo!.isNotEmpty;
 
     return ListTile(
-      leading: Container(
-        color: lineColor,
-        height: double
-            .infinity, 
-        width: 5,
-      ),
+      leading: Container(color: lineColor, height: double.infinity, width: 5),
       title: Text(
-        station.isTransfer ? (transferTo == "" ? station.name : '${station.name}, Transfer here to $transferTo') : station.name,
+        isRealTransfer
+            ? '${station.name}, Transfer here to $transferTo'
+            : station.name,
         style: TextStyle(
-          fontWeight: station.isTransfer ? FontWeight.bold : FontWeight.normal,
+          fontWeight: isRealTransfer ? FontWeight.bold : FontWeight.normal,
         ),
       ),
     );

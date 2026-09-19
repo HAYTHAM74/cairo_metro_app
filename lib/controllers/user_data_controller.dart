@@ -21,6 +21,7 @@ class UserDataController extends GetxController
     username.value = userData['username'] ?? 'Traveler';
     ageCategory.value = userData['ageCategory'] ?? 'Unknown';
     isSpecialNeeds.value = userData['isSpecialNeeds'] ?? false;
+    print(ageCategory.value);
   }
   
 }

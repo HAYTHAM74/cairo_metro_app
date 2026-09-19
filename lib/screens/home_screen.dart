@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:cairo_metro_app/models/station.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -35,7 +36,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final box = GetStorage();
-    
+
     final Map<String, dynamic> userData = box.read('currentUserProfile') ?? {};
     final String username = userData['username'] ?? 'Traveler';
     return Scaffold(
@@ -197,7 +198,8 @@ class HomeScreen extends StatelessWidget {
                 controller.destinationStation.value =
                     confirmedDestinationStation;
                 controller.calculateRoutes();
-                destenationPlaceController.clear();//**************************************************
+                destenationPlaceController
+                    .clear(); //**************************************************
               },
               label: const Text('Show route'),
               icon: const Icon(Icons.location_on),
@@ -208,7 +210,7 @@ class HomeScreen extends StatelessWidget {
             ),
             ToggleRouteOptions(routeController: controller),
             PriceTimeWidget(),
-            Expanded(child: RouteShowingWidget(routeController: controller))
+            Expanded(child: RouteShowingWidget(routeController: controller)),
           ],
         ),
       ),

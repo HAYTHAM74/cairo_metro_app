@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:cairo_metro_app/services/coordinate_service.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class LocationController extends GetxController {
   final coordinates = CoordinateService();
@@ -26,8 +27,12 @@ class LocationController extends GetxController {
       Get.snackbar('Error', 'Location permissions are permanently denied.');
       return null;
     }
-
     final position = await Geolocator.getCurrentPosition();
+    //لو ضرب شيل لحد السطر القبل الاخير
+    final uri = Uri.parse(
+      'https://www.google.com/maps/search/?api=1&query=${position.latitude},${position.longitude}',
+    );
+    await launchUrl(uri, mode: LaunchMode.externalApplication);
     return nearestStation(position.latitude, position.longitude);
   }
 

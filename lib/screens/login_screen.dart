@@ -12,8 +12,6 @@ class LoginPage extends StatelessWidget {
   final addm = false.obs;
   final isSpecialNeeds = false.obs;
 
-  //List tripType = <String>['Less switching of stations', 'The shortest way'];
-
   final tripTypeController = TextEditingController();
 
   final List age = <String>['1-25', '26-59', '60+'];
@@ -76,7 +74,6 @@ class LoginPage extends StatelessWidget {
                 ),
               ),
 
-              // Age + Special Needs
               Row(
                 children: [
                   Expanded(
@@ -84,6 +81,7 @@ class LoginPage extends StatelessWidget {
                       onSelected: (s) {
                         if (s != null) {
                           addm.value = true;
+                          ticketCatagoryController.text = s;
                         }
                       },
 

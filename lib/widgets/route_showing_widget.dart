@@ -20,6 +20,7 @@ class RouteShowingWidget extends StatelessWidget {
           child: Text("Select stations to generate a route."),
         );
       }
+
       List<Station> targetRoute = [];
       if (options.containsKey("primary")) {
         targetRoute = options['primary']!.toList();
@@ -29,37 +30,49 @@ class RouteShowingWidget extends StatelessWidget {
             ? options['shortest'] ?? []
             : options['leastTransfers'] ?? [];
       }
+
       return SizedBox(
         height: double.infinity,
         child: ListView.builder(
           itemCount: targetRoute.length,
           itemBuilder: (context, index) {
             final station = targetRoute[index];
-            int activeLine = 1;
-            if (index < targetRoute.length - 1) {
-              final nextStation = targetRoute[index + 1];
-              final sharedLines = station.lines.toSet().intersection(
-                nextStation.lines.toSet(),
-              );
-              if (sharedLines.isNotEmpty) {
-                activeLine = sharedLines.first;
-              }
-            } else if (index > 0) {
+
+            // 1. Calculate the line used to reach this station
+            int? incomingLine;
+            if (index > 0) {
               final previousStation = targetRoute[index - 1];
-              final sharedLines = station.lines.toSet().intersection(
+              final sharedPrev = station.lines.toSet().intersection(
                 previousStation.lines.toSet(),
               );
-              if (sharedLines.isNotEmpty) {
-                activeLine = sharedLines.first;
-              }
+              if (sharedPrev.isNotEmpty) incomingLine = sharedPrev.first;
             }
-            return station.isTransfer
-                ? RouteTile(
-                    station: station,
-                    currentLine: activeLine,
-                    transferTo: (index + 1 == targetRoute.length || index == 0) ? "" : targetRoute[index + 1].name,
-                  )
-                : RouteTile(station: station, currentLine: activeLine);
+
+            // 2. Calculate the line used to leave this station
+            int? outgoingLine;
+            if (index < targetRoute.length - 1) {
+              final nextStation = targetRoute[index + 1];
+              final sharedNext = station.lines.toSet().intersection(
+                nextStation.lines.toSet(),
+              );
+              if (sharedNext.isNotEmpty) outgoingLine = sharedNext.first;
+            }
+
+            // 3. A transfer ONLY occurs if both exist and they are different
+            bool isActualTransfer =
+                (incomingLine != null &&
+                outgoingLine != null &&
+                incomingLine != outgoingLine);
+
+            // Display the outgoing line color (or incoming if it's the final destination)
+            int activeLine = outgoingLine ?? incomingLine ?? 1;
+
+            return RouteTile(
+              station: station,
+              currentLine: activeLine,
+              // Pass the transfer target only if a physical line change happens
+              transferTo: isActualTransfer ? 'Line $outgoingLine' : null,
+            );
           },
         ),
       );

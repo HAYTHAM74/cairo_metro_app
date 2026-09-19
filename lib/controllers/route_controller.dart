@@ -19,7 +19,7 @@ class RouteController extends GetxController {
   final discountedFareLeastTransfer = 0.obs;
   final RxMap<String, List<Station>> tripOptions =
       <String, List<Station>>{}.obs;
-  final userController = UserDataController();
+  UserDataController get userController => Get.find<UserDataController>();
 
   @override
   void onInit() {
@@ -32,6 +32,8 @@ class RouteController extends GetxController {
   (int, int) updateFaresForRoute(String activeKey) {
     final fareCalc = FareCalcService();
     bool isSenior = userController.ageCategory.value == '60+';
+    print(isSenior);
+    print(userController.ageCategory.value);
     bool isSpecialNeeds = userController.isSpecialNeeds.value;
     return fareCalc.ticketCalc(
       tripOptions[activeKey]!.length,
@@ -79,5 +81,6 @@ class RouteController extends GetxController {
 
     isLoading.value = false;
     isShortestRouteSelected.value = true;
+    
   }
 }

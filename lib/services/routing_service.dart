@@ -25,19 +25,24 @@ class RoutingService {
 
     PriorityQueue<TraversalState> queue = PriorityQueue<TraversalState>();
     queue.add(startState);
-    Map<Station, int> costs = {};
-    costs[start] = 0;
+    
+    // FIX 1: Map tracks the Station ID + the Line you arrived on
+    Map<String, int> costs = {};
+    costs['${start.id}_null'] = 0;
 
     while (queue.isNotEmpty) {
       TraversalState current = queue.removeFirst();
+      
       if (current.station.id == destination.id) {
         return current.path;
       }
+      
       for (Station neighbor in network.graph[current.station]!) {
         Set<int> sharedLines = current.station.lines.toSet().intersection(
           neighbor.lines.toSet(),
         );
         if (sharedLines.isEmpty) continue;
+        
         int newLine;
         if (current.currentLine != null &&
             sharedLines.contains(current.currentLine)) {
@@ -45,12 +50,18 @@ class RoutingService {
         } else {
           newLine = sharedLines.first;
         }
+        
         bool isTransfer =
             current.currentLine != null && current.currentLine != newLine;
         int newCost =
             current.cost + stationCost + (isTransfer ? transferPenalty : 0);
-        if (!costs.containsKey(neighbor) || newCost < costs[neighbor]!) {
-          costs[neighbor] = newCost;
+            
+        // FIX 2: Create the composite key for evaluation
+        String stateKey = '${neighbor.id}_$newLine';
+        
+        // FIX 3: Check against the specific station+line combination
+        if (!costs.containsKey(stateKey) || newCost < costs[stateKey]!) {
+          costs[stateKey] = newCost;
           List<Station> newPath = List.from(current.path)..add(neighbor);
           queue.add(
             TraversalState(
