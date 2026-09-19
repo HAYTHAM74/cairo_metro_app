@@ -21,6 +21,50 @@ class RouteController extends GetxController {
       <String, List<Station>>{}.obs;
   UserDataController get userController => Get.find<UserDataController>();
 
+  /// Returns the stations list of the currently active route based on user selection.
+  List<Station> get currentRoute {
+    if (tripOptions.isEmpty) return const [];
+    if (tripOptions.containsKey('primary')) {
+      return tripOptions['primary'] ?? const [];
+    }
+    return isShortestRouteSelected.value
+        ? (tripOptions['shortest'] ?? const [])
+        : (tripOptions['leastTransfers'] ?? const []);
+  }
+
+  /// Total number of stations in the calculated journey.
+  int get stationCount => currentRoute.length;
+
+  /// Total estimated travel time in minutes (Number of Stations * 3).
+  int get estimatedTripTimeMinutes => stationCount * 3;
+
+  /// Total line transfers required during the journey.
+  int get transferCount => calculateTransfers(currentRoute);
+
+  /// Dynamically calculates the number of line transfers for a given route of stations.
+  static int calculateTransfers(List<Station> route) {
+    if (route.length < 3) return 0;
+    int transfers = 0;
+    for (int i = 1; i < route.length - 1; i++) {
+      final prev = route[i - 1];
+      final curr = route[i];
+      final next = route[i + 1];
+
+      final sharedPrev = curr.lines.toSet().intersection(prev.lines.toSet());
+      final sharedNext = curr.lines.toSet().intersection(next.lines.toSet());
+
+      final incomingLine = sharedPrev.isNotEmpty ? sharedPrev.first : null;
+      final outgoingLine = sharedNext.isNotEmpty ? sharedNext.first : null;
+
+      if (incomingLine != null &&
+          outgoingLine != null &&
+          incomingLine != outgoingLine) {
+        transfers++;
+      }
+    }
+    return transfers;
+  }
+
   @override
   void onInit() {
     super.onInit();
