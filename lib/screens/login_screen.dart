@@ -45,7 +45,7 @@ class LoginPage extends StatelessWidget {
                 },
 
                 decoration: InputDecoration(
-                  labelText: 'Username',
+                  labelText: 'Enter your name',
 
                   prefixIcon: const Icon(
                     Icons.person_outline,
@@ -88,9 +88,6 @@ class LoginPage extends StatelessWidget {
                       controller: ticketCatagoryController,
 
                       width: double.infinity,
-
-                      enableFilter: true,
-                      enableSearch: true,
 
                       label: const Text('Enter Your Age'),
 

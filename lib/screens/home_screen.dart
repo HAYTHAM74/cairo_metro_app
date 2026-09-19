@@ -1,5 +1,6 @@
 import 'package:cairo_metro_app/controllers/location_controller.dart';
 import 'package:cairo_metro_app/controllers/route_controller.dart';
+import 'package:cairo_metro_app/services/coordinate_service.dart';
 import 'package:cairo_metro_app/widgets/main_drawer.dart';
 import 'package:cairo_metro_app/widgets/price_time_widget.dart';
 import 'package:cairo_metro_app/widgets/route_showing_widget.dart';
@@ -14,6 +15,7 @@ class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
   final RouteController controller = Get.find<RouteController>();
   final LocationController locationController = Get.put(LocationController());
+  final coordinates = CoordinateService();
   late final stations = {
     ...controller.network.line1Names,
     ...controller.network.line2Names,
@@ -56,6 +58,9 @@ class HomeScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: DropdownMenu<String>(
+                    requestFocusOnTap: true,
+                    enableSearch: true,
+                    enableFilter: true,
                     menuHeight: 500,
                     controller: startMenuController,
                     width: double.infinity,
@@ -93,6 +98,13 @@ class HomeScreen extends StatelessWidget {
                           nearestId;
                       startStation.value = nearestId;
                       startMenuController.text = nearestName;
+                      final uri = Uri.parse(
+                        'https://www.google.com/maps/dir/?api=1&destination=${coordinates.stationsCoordinates[nearestId]!.lat},${coordinates.stationsCoordinates[nearestId]!.lng}',
+                      );
+                      await launchUrl(
+                        uri,
+                        mode: LaunchMode.externalApplication,
+                      );
                     }
                   },
                   icon: Icon(Icons.my_location),
@@ -104,6 +116,10 @@ class HomeScreen extends StatelessWidget {
                 Expanded(
                   child: Obx(() {
                     return DropdownMenu<String>(
+                      
+                      requestFocusOnTap: true,
+                      enableSearch: true,
+                      enableFilter: true,
                       menuHeight: 500,
                       controller: destinationMenuController,
                       width: double.infinity,
@@ -160,6 +176,7 @@ class HomeScreen extends StatelessWidget {
                               nearestId;
                           destinationStation.value = nearestId;
                           destinationMenuController.text = nearestName;
+                          destenationPlaceController.clear();
                         }
                       },
                     );

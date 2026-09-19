@@ -31,16 +31,3 @@ class CairoMetroApp extends StatelessWidget {
     );
   }
 }
-/*String _timeCalc(int numOfStations) {
-    int totalMinutes = (numOfStations - 1) * 3;
-
-    if (totalMinutes >= 60) {
-      int hours = totalMinutes ~/ 60;
-      int minutes = totalMinutes % 60;
-
-      String formattedMinutes = minutes.toString().padLeft(2, '0');
-      return "$hours:$formattedMinutes hours";
-    } else {
-      return "$totalMinutes minutes";
-    }
-  }*/

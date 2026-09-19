@@ -40,6 +40,8 @@ dependencies:
   url_launcher: ^6.3.2
   geocoding: ^5.0.0
   get_storage: ^2.1.1
+  flutter_native_splash: ^2.4.8
+  flutter_launcher_icons: ^0.14.4
 
 dev_dependencies:
   flutter_test:
@@ -94,3 +96,17 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_native_splash:
+  color: "#1565C0"
+  image: "assets/images/cairo_metro_logo.png"
+  android_12:
+    color: "#1565C0"
+    image: "assets/images/cairo_metro_logo.png"
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/cairo_metro_logo.png"
+  # These two lines fix the issue on modern Android devices:
+  adaptive_icon_background: "#1565C0" 
+  adaptive_icon_foreground: "assets/images/cairo_metro_logo.png"
